@@ -1,7 +1,9 @@
-export interface Props {
+export interface ProductProps {
 
 };
 
-export const products = (props: Props) => {
+const Product = (props: ProductProps) => {
   return (<div>Some products</div>)
 };
+
+export default Product;

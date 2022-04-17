@@ -49,6 +49,12 @@ function getAdditionalModulePaths(options = {}) {
   );
 }
 
+const getCommonAliases = () => {
+  return {
+    '@': paths.appSrc,
+  };
+};
+
 /**
  * Get webpack aliases based on the baseUrl of a compilerOptions object.
  *
@@ -56,15 +62,17 @@ function getAdditionalModulePaths(options = {}) {
  */
 function getWebpackAliases(options = {}) {
   const baseUrl = options.baseUrl;
+  const commonAliases = getCommonAliases();
 
   if (!baseUrl) {
-    return {};
+    return commonAliases;
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
     return {
+      ...commonAliases,
       src: paths.appSrc,
     };
   }
@@ -77,15 +85,17 @@ function getWebpackAliases(options = {}) {
  */
 function getJestAliases(options = {}) {
   const baseUrl = options.baseUrl;
+  const commonAliases = getCommonAliases();
 
   if (!baseUrl) {
-    return {};
+    return commonAliases;
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
     return {
+      ...commonAliases,
       '^src/(.*)$': '<rootDir>/src/$1',
     };
   }
